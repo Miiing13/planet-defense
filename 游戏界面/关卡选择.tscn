@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+var Levelbutton=load(\"res://游戏界面/关卡按钮.tscn\")
+
+
+func _ready():
+	print(Levelbutton)
+	
+	var filegroup=dir_contents(\"res://游戏关卡/\")
+	for i in filegroup.size():
+		var Levelbuttonsample=Levelbutton.instance()
+		Levelbuttonsample.changename(namedeal(filegroup[i]))
+		$\"网格容器\".add_child(Levelbuttonsample)
+		#add_child(Levelbuttonsample)
+		print(Levelbuttonsample)
+
+
+
+func dir_contents(path):
+	var filegroup=[]
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != \"\":
+			if dir.current_is_dir():
+#				print(file_name)
+				pass
+			else:
+				filegroup.append(file_name)
+#				print(file_name)
+			file_name = dir.get_next()
+	else:
+		print(\"尝试访问路径时出错。\")
+	return filegroup
+	
+func namedeal(Originalname:String):
+	var group=Originalname.split(\".\")
+	return group[0]
+"
+
+[node name="关卡选择" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+
+[node name="网格容器" type="GridContainer" parent="."]
+margin_left = 32.0
+margin_top = 46.0
+margin_right = 873.0
+margin_bottom = 537.0
+columns = 3

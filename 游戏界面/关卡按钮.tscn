@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://游戏资源/图片/1.png" type="Texture" id=1]
+[ext_resource path="res://游戏资源/字体/SourceSans3-Black.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://游戏界面/关卡按钮.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[node name="关卡按钮" type="Control"]
+margin_right = 120.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 120, 80 )
+script = ExtResource( 3 )
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 120, 80 )
+mouse_filter = 1
+texture = ExtResource( 1 )
+region_rect = Rect2( 34.4009, 235.041, 1484.08, 641.697 )
+patch_margin_left = 2
+
+[node name="名称" type="Label" parent="."]
+process_priority = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Level name"
+align = 1
+valign = 1
+__meta__ = {
+"_editor_description_": ""
+}
+
+[connection signal="gui_input" from="NinePatchRect" to="." method="_on_NinePatchRect_gui_input"]

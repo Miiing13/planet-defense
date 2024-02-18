@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="关卡3" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 33.0
+margin_top = 48.0
+margin_right = 112.0
+margin_bottom = 116.0
+text = "3"
