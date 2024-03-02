@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://游戏资源/图片/IMG_2203.PNG" type="Texture" id=1]
+
+[node name="孵化器" type="Node2D"]
+
+[node name="Img2203" type="Sprite" parent="."]
+scale = Vector2( 0.108, 0.128 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 116.949, 140.61, 890.774, 1022.59 )
