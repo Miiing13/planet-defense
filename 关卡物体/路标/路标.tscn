@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://游戏资源/图片/IMG_2203.PNG" type="Texture" id=1]
+
+[node name="路标" type="Node2D"]
+
+[node name="显示" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 598.735, 368.585, 15.7457, 18.37 )

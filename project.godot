@@ -12,11 +12,16 @@ config_version=4
 
 config/name="Mygame"
 run/main_scene="res://游戏界面/开始界面.tscn"
-config/icon="res://游戏配置/icon.png"
+config/icon="res://游戏配置/logo.png"
 
 [autoload]
 
-SceneScheduling="*res://自动加载/Scene scheduling.gd"
+SceneScheduling="*res://自动加载/Scenescheduling.gd"
+
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [gui]
 

@@ -1,11 +1,35 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://游戏资源/图片/IMG_2203.PNG" type="Texture" id=1]
 
-[node name="孵化器" type="Node2D"]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
 
-[node name="Img2203" type="Sprite" parent="."]
-scale = Vector2( 0.108, 0.128 )
+var monster1=load(\"res://关卡物体/怪物/怪物1.tscn\")
+
+func HatchOneMonster():
+	var MonsterSample=monster1.instance()
+	SceneScheduling.CurrentLevel.add_child(MonsterSample)
+	var CoordGroup=SceneScheduling.CurrentLevel.GetCoordbyPath(SceneScheduling.CurrentLevel.way1)
+	MonsterSample.PathSetting(CoordGroup)
+
+
+func _on__timeout():
+	HatchOneMonster()
+
+"
+
+[node name="孵化器" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="显示" type="Sprite" parent="."]
+position = Vector2( 5, 1.52588e-05 )
+scale = Vector2( 0.121831, 0.129795 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 116.949, 140.61, 890.774, 1022.59 )
+region_rect = Rect2( 24.2009, 20.5003, 1102.48, 782.922 )
+
+[node name="计时器" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="计时器" to="." method="_on__timeout"]

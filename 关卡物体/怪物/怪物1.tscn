@@ -1,3 +1,55 @@
-[gd_scene format=2]
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-2.png" type="Texture" id=1]
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-3.png" type="Texture" id=2]
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-4.png" type="Texture" id=3]
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-5.png" type="Texture" id=4]
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-6.png" type="Texture" id=5]
+[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-1.png" type="Texture" id=6]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node2D
+
+var WalkPath
+var CurrentSignIndex
+var MovingSpeed=100
+
+func PathSetting(CoordGroup):
+	WalkPath=CoordGroup
+	CurrentSignIndex=0
+	position=WalkPath[CurrentSignIndex]
+	
+	
+func _physics_process(delta):
+	print(WalkPath)
+	if WalkPath!=null:
+		
+		var NextIndex=CurrentSignIndex+1
+		if NextIndex<WalkPath.size():
+			if position.distance_to(WalkPath[NextIndex])>2:
+				var MovingDirection:Vector2=WalkPath[NextIndex]-position
+				position+=MovingDirection.normalized()*MovingSpeed*delta
+			else:
+				CurrentSignIndex+=1
+				
+		
+
+"
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "走路",
+"speed": 6.0
+} ]
 
 [node name="怪物" type="Node2D"]
+script = SubResource( 2 )
+
+[node name="动画" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.0679931, 0.0679931 )
+frames = SubResource( 1 )
+animation = "走路"
+frame = 3
+flip_h = true
