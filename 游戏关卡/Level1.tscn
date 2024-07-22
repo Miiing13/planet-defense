@@ -1,23 +1,24 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://关卡物体/地图/地图1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://关卡物体/孵化/孵化器.tscn" type="PackedScene" id=2]
 [ext_resource path="res://关卡物体/据点/据点.tscn" type="PackedScene" id=3]
 [ext_resource path="res://关卡物体/怪物/怪物1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://关卡物体/路标/路标.tscn" type="PackedScene" id=5]
+[ext_resource path="res://关卡物体/建造/建造器.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
 var way1=[\"路标0\",\"路标2\",\"路标3\",\"路标4\",\"路标5\",\"路标6\",\"路标7\",\"路标8\",\"路标9\",\"路标10\"]
-var way2=[\"路标0\",\"路标2\",\"路标3\",\"路标4\",\"路标5\",\"路标6\",\"路标7\"]
 
+onready var Incubator=$\"孵化器\"
 
 func GetCoordbyPath(SignGroup):
 	var CoordGroup=[]
 	for i in SignGroup:
-		var Node=SceneScheduling.CurrentLevel.get_node(\"路径/\"+i)
-		CoordGroup.append(Node.position)
+		var node=SceneScheduling.CurrentLevel.get_node(\"路径/\"+i)
+		CoordGroup.append(node.position)
 
 	return CoordGroup
 	
@@ -25,7 +26,9 @@ func _init():
 	SceneScheduling.CurrentLevel=self
 
 func _ready():
-	GetCoordbyPath(way1)
+	var WayGroup=GetCoordbyPath(way1)
+	Incubator.HatchMonster(\"宇航员\",WayGroup)
+	Incubator.HatchMonster(\"飞行器\",WayGroup)
 "
 
 [node name="关卡1" type="Node2D"]
@@ -73,3 +76,15 @@ position = Vector2( 133, 163 )
 
 [node name="路标10" parent="路径" instance=ExtResource( 5 )]
 position = Vector2( 51, 163 )
+
+[node name="建造器" parent="." instance=ExtResource( 6 )]
+position = Vector2( 763, 426 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="建造器2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 660, 427 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="建造器3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 399, 186 )
+scale = Vector2( 0.5, 0.5 )

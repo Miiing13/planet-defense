@@ -17,6 +17,7 @@ config/icon="res://游戏配置/logo.png"
 [autoload]
 
 SceneScheduling="*res://自动加载/Scenescheduling.gd"
+CreateBullet="*res://自动加载/CreateBullet.gd"
 
 [display]
 

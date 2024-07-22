@@ -7,19 +7,67 @@ script/source = "extends Node2D
 
 var monster1=load(\"res://关卡物体/怪物/怪物1.tscn\")
 
-func HatchOneMonster():
-	var MonsterSample=monster1.instance()
+var MonsterList=[{\"Name\":\"宇航员\",\"Scene\":load(\"res://关卡物体/怪物/怪物1.tscn\"),\"Number\":10,\"HatchedNumber\":0,\"IncubationInterval\":1,\"Timer\":Timer.new()},
+				{\"Name\":\"飞行器\",\"Scene\":load(\"res://关卡物体/怪物/怪物1.tscn\"),\"Number\":10,\"HatchedNumber\":0,\"IncubationInterval\":1,\"Timer\":Timer.new()}]
+
+var HatchingOrNot=false
+
+var TaskList=[]
+
+func _ready():
+	for i in MonsterList:
+		add_child(i.Timer)
+
+func HatchMonster(Name,Way):
+	#print(TaskList)
+	TaskList.append({\"Name\":Name,\"Way\":Way})
+
+func GetListItemByName(Name):
+	for Item in MonsterList:
+		if Item[\"Name\"]==Name:
+			return Item
+
+
+var PollingInterval=1
+func _physics_process(delta):
+	PollingInterval-=delta
+	if PollingInterval<=0:
+		PollingInterval=1
+		if HatchingOrNot==false and TaskList.size()>0:
+			var Item=GetListItemByName(TaskList[0].Name)
+			Item.Timer.wait_time=Item.IncubationInterval
+			Item.Timer.autostart=true
+			Item.HatchedNumber=0
+			Item.Timer.connect(\"timeout\",self,\"HatchingCallback\",[Item,TaskList[0].Way])
+			Item.Timer.start()
+			HatchingOrNot=true
+
+
+
+func HatchingCallback(Item,CoordGroup):
+	var MonsterSample=Item[\"Scene\"].instance()
 	SceneScheduling.CurrentLevel.add_child(MonsterSample)
-	var CoordGroup=SceneScheduling.CurrentLevel.GetCoordbyPath(SceneScheduling.CurrentLevel.way1)
 	MonsterSample.PathSetting(CoordGroup)
-
-
-func _on__timeout():
-	HatchOneMonster()
+	Item[\"HatchedNumber\"]+=1
+	if Item[\"HatchedNumber\"]>Item[\"Number\"]:
+		Item[\"Timer\"].stop()
+		TaskList.remove(0)
+		HatchingOrNot=false
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 "
 
-[node name="孵化器" type="Node2D"]
+[node name="Incubator" type="Node2D"]
 script = SubResource( 1 )
 
 [node name="显示" type="Sprite" parent="."]
@@ -28,8 +76,3 @@ scale = Vector2( 0.121831, 0.129795 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 24.2009, 20.5003, 1102.48, 782.922 )
-
-[node name="计时器" type="Timer" parent="."]
-autostart = true
-
-[connection signal="timeout" from="计时器" to="." method="_on__timeout"]
