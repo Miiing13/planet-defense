@@ -3,8 +3,8 @@
 [node name="关卡3" type="Node2D"]
 
 [node name="Label" type="Label" parent="."]
-margin_left = 31.0
-margin_top = 37.0
-margin_right = 145.0
-margin_bottom = 123.0
+offset_left = 31.0
+offset_top = 37.0
+offset_right = 145.0
+offset_bottom = 123.0
 text = "4"

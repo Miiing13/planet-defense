@@ -1,22 +1,26 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene format=3 uid="uid://d03fpo4l0g10i"]
 
-[ext_resource path="res://关卡物体/子弹/子弹1.tscn" type="PackedScene" id=1]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-2.png" type="Texture" id=3]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-1.png" type="Texture" id=4]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-4.png" type="Texture" id=5]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-6.png" type="Texture" id=6]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-5.png" type="Texture" id=8]
-[ext_resource path="res://关卡物体/炮塔/鱼骨/未命名作品-3.png" type="Texture" id=12]
+[ext_resource type="PackedScene" uid="uid://cg2g8mjmu0lm5" path="res://关卡物体/子弹/子弹1.tscn" id="1"]
+[ext_resource type="AudioStream" uid="uid://d08apfats8isd" path="res://游戏资源/音效/toy-button-105724_[cut_1sec].mp3" id="2"]
+[ext_resource type="Texture2D" uid="uid://boeqc2bd1omyw" path="res://关卡物体/炮塔/鱼骨/未命名作品-2.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://b7oh5a1hkpl5h" path="res://关卡物体/炮塔/鱼骨/未命名作品-1.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://dmemxcsp0kvyp" path="res://关卡物体/炮塔/鱼骨/未命名作品-4.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://h808f1ay05u8" path="res://关卡物体/炮塔/鱼骨/未命名作品-6.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://r6nvceimjhgb" path="res://关卡物体/炮塔/鱼骨/未命名作品-5.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://cftksbavgptjs" path="res://关卡物体/炮塔/鱼骨/未命名作品-3.png" id="12"]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id="2"]
 script/source = "extends Node2D
 
-export (PackedScene) var Bullet
+@export var Bullet: PackedScene
 
 var TargetList=[]
 
+@export var initial_facing_angle: float = -90
+
 func _ready():
 	$\"计时器\".stop()
+	$AnimatedSprite2D.play()
 
 func _on__area_entered(area):
 	TargetList.append(area)
@@ -31,40 +35,75 @@ func _on__timeout():
 	
 func ShootTheTarget(Target):
 	CreateBullet.CreateBullet(global_position,Target,Bullet)
+	var player = $AudioStreamPlayer
+	if player.stream:
+		player.stream.loop = false
+		player.play()
+		
+func _process(delta):
+	if TargetList.size() > 0:
+		var target_position = TargetList[0].global_position
+		var direction = (target_position - global_position).normalized()
+		var target_angle = direction.angle()
+		rotation = target_angle - deg_to_rad(initial_facing_angle)
 	
-	
-
 "
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 12 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ) ],
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}],
 "loop": true,
-"name": "眼球外星人",
+"name": &"眼球外星人",
 "speed": 7.0
-} ]
+}]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id="3"]
 radius = 411.311
 
-[node name="箭塔" type="Node2D"]
-script = SubResource( 2 )
-Bullet = ExtResource( 1 )
+[node name="箭塔" type="Node2D" unique_id=2096838975]
+scale = Vector2(1.7550526, 1.7550526)
+script = SubResource("2")
+Bullet = ExtResource("1")
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, 37 )
-scale = Vector2( 0.451667, 0.451667 )
-frames = SubResource( 1 )
-animation = "眼球外星人"
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=151753668]
+position = Vector2(2, -3)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("1")
+animation = &"眼球外星人"
+frame = 3
+frame_progress = 0.17014223
 
-[node name="区域" type="Area2D" parent="."]
+[node name="区域" type="Area2D" parent="." unique_id=497579907]
 collision_layer = 4
 
-[node name="CS2D" type="CollisionShape2D" parent="区域"]
-shape = SubResource( 3 )
+[node name="CS2D" type="CollisionShape2D" parent="区域" unique_id=92469236]
+shape = SubResource("3")
 
-[node name="计时器" type="Timer" parent="."]
+[node name="计时器" type="Timer" parent="." unique_id=1483633152]
+wait_time = 0.5
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=588695659]
+physics_interpolation_mode = 1
+stream = ExtResource("2")
 
 [connection signal="area_entered" from="区域" to="." method="_on__area_entered"]
 [connection signal="area_exited" from="区域" to="." method="_on__area_exited"]

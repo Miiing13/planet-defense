@@ -1,11 +1,32 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene format=3 uid="uid://bwnlpkgilguq"]
 
-[ext_resource path="res://游戏资源/图片/IMG_2203.PNG" type="Texture" id=1]
+[ext_resource type="Texture2D" uid="uid://de7bgy7wl8ng4" path="res://游戏资源/图片/IMG_2203.PNG" id="1"]
 
-[node name="据点" type="Node2D"]
+[sub_resource type="GDScript" id="2"]
+script/source = "extends Node2D
 
-[node name="Img2203" type="Sprite" parent="."]
-scale = Vector2( 0.12, 0.094 )
-texture = ExtResource( 1 )
+func _on_Area2D_area_entered(area):
+	GodOfGame.AlterHP(-5)
+"
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(22, 37)
+
+[node name="据点" type="Node2D" unique_id=1731623459]
+scale = Vector2(1.5982271, 1.5982271)
+script = SubResource("2")
+
+[node name="Img2203" type="Sprite2D" parent="." unique_id=1569066009]
+scale = Vector2(0.12, 0.094)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 1392.84, 976.479, 421.198, 889.634 )
+region_rect = Rect2(1392.84, 976.479, 421.198, 889.634)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1101874486]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1106504396]
+position = Vector2(-2, -0.5)
+shape = SubResource("1")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

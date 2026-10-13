@@ -1,7 +1,7 @@
 extends Node
 
 func CreateBullet(BulletCreateCoord,BulletTarget,BulletType):
-	var BulletTypeInstance=BulletType.instance()
+	var BulletTypeInstance=BulletType.instantiate()
 	SceneScheduling.CurrentLevel.add_child(BulletTypeInstance)
 	BulletTypeInstance.position=BulletCreateCoord
 	var BulletDirection=BulletTarget-BulletCreateCoord

@@ -1,18 +1,19 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene format=3 uid="uid://c26vssat8eqq7"]
 
-[ext_resource path="res://关卡物体/地图/地图1.tscn" type="PackedScene" id=1]
-[ext_resource path="res://关卡物体/孵化/孵化器.tscn" type="PackedScene" id=2]
-[ext_resource path="res://关卡物体/据点/据点.tscn" type="PackedScene" id=3]
-[ext_resource path="res://关卡物体/怪物/怪物1.tscn" type="PackedScene" id=4]
-[ext_resource path="res://关卡物体/路标/路标.tscn" type="PackedScene" id=5]
-[ext_resource path="res://关卡物体/建造/建造器.tscn" type="PackedScene" id=6]
+[ext_resource type="PackedScene" path="res://关卡物体/地图/地图1.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cbjj2hg5mgwey" path="res://关卡物体/孵化/孵化器.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bwnlpkgilguq" path="res://关卡物体/据点/据点.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://关卡物体/路标/路标.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://b720yhrdt3qxl" path="res://关卡物体/建造/建造器.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://关卡物体/Ui/状态.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dvvfvc02h5nmr" path="res://关卡物体/Ui/控制按钮.tscn" id="8"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends Node2D
 
 var way1=[\"路标0\",\"路标2\",\"路标3\",\"路标4\",\"路标5\",\"路标6\",\"路标7\",\"路标8\",\"路标9\",\"路标10\"]
 
-onready var Incubator=$\"孵化器\"
+@onready var Incubator=$\"孵化器\"
 
 func GetCoordbyPath(SignGroup):
 	var CoordGroup=[]
@@ -26,65 +27,96 @@ func _init():
 	SceneScheduling.CurrentLevel=self
 
 func _ready():
+	GodOfGame.StartLevel(20)
 	var WayGroup=GetCoordbyPath(way1)
 	Incubator.HatchMonster(\"宇航员\",WayGroup)
 	Incubator.HatchMonster(\"飞行器\",WayGroup)
+	Incubator.FinishSchedulingWaves()
 "
 
-[node name="关卡1" type="Node2D"]
-script = SubResource( 1 )
+[node name="关卡1" type="Node2D" unique_id=42361005]
+script = SubResource("1")
 
-[node name="地图" parent="." instance=ExtResource( 1 )]
+[node name="地图" parent="." unique_id=1235868127 instance=ExtResource("1")]
 
-[node name="据点" parent="." instance=ExtResource( 3 )]
-position = Vector2( 69, 157 )
+[node name="据点" parent="." unique_id=451052450 instance=ExtResource("3")]
+position = Vector2(69, 157)
 
-[node name="孵化器" parent="." instance=ExtResource( 2 )]
-position = Vector2( 921, 96 )
+[node name="孵化器" parent="." unique_id=981162325 instance=ExtResource("2")]
+position = Vector2(922, 96)
 
-[node name="怪物" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1133, 145 )
+[node name="路径" type="Node2D" parent="." unique_id=293304925]
 
-[node name="路径" type="Node2D" parent="."]
+[node name="路标0" parent="路径" unique_id=1979372226 instance=ExtResource("5")]
+position = Vector2(925, 142)
 
-[node name="路标0" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 925, 142 )
+[node name="路标2" parent="路径" unique_id=218572425 instance=ExtResource("5")]
+position = Vector2(817, 142)
 
-[node name="路标2" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 817, 142 )
+[node name="路标3" parent="路径" unique_id=174712329 instance=ExtResource("5")]
+position = Vector2(817, 468)
 
-[node name="路标3" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 817, 468 )
+[node name="路标4" parent="路径" unique_id=2072947624 instance=ExtResource("5")]
+position = Vector2(580, 473)
 
-[node name="路标4" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 580, 473 )
+[node name="路标5" parent="路径" unique_id=1950295810 instance=ExtResource("5")]
+position = Vector2(574, 102)
 
-[node name="路标5" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 574, 102 )
+[node name="路标6" parent="路径" unique_id=1949868404 instance=ExtResource("5")]
+position = Vector2(319, 102)
 
-[node name="路标6" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 319, 102 )
+[node name="路标7" parent="路径" unique_id=581091004 instance=ExtResource("5")]
+position = Vector2(316, 453)
 
-[node name="路标7" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 316, 453 )
+[node name="路标8" parent="路径" unique_id=646468826 instance=ExtResource("5")]
+position = Vector2(135, 453)
 
-[node name="路标8" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 135, 453 )
+[node name="路标9" parent="路径" unique_id=278128814 instance=ExtResource("5")]
+position = Vector2(133, 163)
 
-[node name="路标9" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 133, 163 )
+[node name="路标10" parent="路径" unique_id=36092416 instance=ExtResource("5")]
+position = Vector2(51, 163)
 
-[node name="路标10" parent="路径" instance=ExtResource( 5 )]
-position = Vector2( 51, 163 )
+[node name="建造器" parent="." unique_id=1542121766 instance=ExtResource("6")]
+position = Vector2(768, 536)
+scale = Vector2(0.5, 0.5)
 
-[node name="建造器" parent="." instance=ExtResource( 6 )]
-position = Vector2( 763, 426 )
-scale = Vector2( 0.5, 0.5 )
+[node name="建造器2" parent="." unique_id=516953026 instance=ExtResource("6")]
+position = Vector2(640, 536)
+scale = Vector2(0.5, 0.5)
 
-[node name="建造器2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 660, 427 )
-scale = Vector2( 0.5, 0.5 )
+[node name="建造器3" parent="." unique_id=830235204 instance=ExtResource("6")]
+position = Vector2(399, 186)
+scale = Vector2(0.5, 0.5)
 
-[node name="建造器3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 399, 186 )
-scale = Vector2( 0.5, 0.5 )
+[node name="建造器4" parent="." unique_id=1988154258 instance=ExtResource("6")]
+position = Vector2(400, 295)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器5" parent="." unique_id=514776535 instance=ExtResource("6")]
+position = Vector2(400, 536)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器6" parent="." unique_id=969148535 instance=ExtResource("6")]
+position = Vector2(272, 536)
+scale = Vector2(0.5, 0.5)
+
+[node name="状态" parent="." unique_id=1456498632 instance=ExtResource("7")]
+layout_mode = 3
+anchors_preset = 15
+offset_left = 13.0
+offset_top = -5.0
+offset_right = 13.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.51826, 1.91167)
+
+[node name="控制按钮" parent="." unique_id=1196683644 instance=ExtResource("8")]
+offset_left = 1016.99994
+offset_top = -6.999999
+offset_right = 1016.99994
+offset_bottom = -6.999999
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.059891712, 0.058823925)

@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://游戏资源/字体/HooskaiChamferedSquare.ttf" type="FontFile" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
+
+func _ready():
+	GodOfGame.connect(\"HPChange\", Callable(self, \"HPChange\"))
+	GodOfGame.connect(\"EXPChange\", Callable(self, \"EXPChange\"))
+	HPChange(GodOfGame.HP)
+	EXPChange(GodOfGame.EXP)
+	
+func HPChange(parameter):
+	$\"HBoxContainer/生命值\".text=str(parameter)
+	
+func EXPChange(parameter):
+	$\"HBoxContainer/经验值\".text=str(parameter)
+"
+
+[sub_resource type="FontFile" id=1]
+font_data = ExtResource( 1 )
+
+[node name="状态" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+offset_top = 10.0
+offset_right = 30.0
+offset_bottom = 29.0
+theme_override_fonts/font = SubResource( 1 )
+text = "hp"
+
+[node name="生命值" type="Label" parent="HBoxContainer"]
+offset_left = 34.0
+offset_top = 10.0
+offset_right = 54.0
+offset_bottom = 29.0
+theme_override_fonts/font = SubResource( 1 )
+text = "20"
+
+[node name="Label3" type="Label" parent="HBoxContainer"]
+offset_left = 58.0
+offset_top = 10.0
+offset_right = 112.0
+offset_bottom = 29.0
+theme_override_fonts/font = SubResource( 1 )
+text = "   EXP"
+
+[node name="经验值" type="Label" parent="HBoxContainer"]
+offset_left = 116.0
+offset_top = 10.0
+offset_right = 146.0
+offset_bottom = 29.0
+theme_override_fonts/font = SubResource( 1 )
+text = "200"

@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://8ojkjiqgpcur"]
+
+[ext_resource type="FontFile" uid="uid://nkv7811m7r1c" path="res://游戏资源/字体/HooskaiChamferedSquare.ttf" id="1"]
+[ext_resource type="Texture2D" uid="uid://cir8oc34oor1y" path="res://游戏资源/图片/game over.jpg" id="2"]
+[ext_resource type="Texture2D" uid="uid://pewkngemvdkf" path="res://游戏资源/图片/1.png" id="3"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Control
+
+func _on_Button_pressed():
+	GodOfGame.ResetGame()
+"
+
+[sub_resource type="FontFile" id="FontFile_7783k"]
+fallbacks = Array[Font]([ExtResource("1")])
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_l8lmw"]
+fallbacks = Array[Font]([ExtResource("1")])
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/160/0/ascent = 0.0
+cache/0/160/0/descent = 0.0
+cache/0/160/0/underline_position = 0.0
+cache/0/160/0/underline_thickness = 0.0
+cache/0/160/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+cache/0/40/0/ascent = 0.0
+cache/0/40/0/descent = 0.0
+cache/0/40/0/underline_position = 0.0
+cache/0/40/0/underline_thickness = 0.0
+cache/0/40/0/scale = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n1w47"]
+
+[node name="游戏结束" type="Control" unique_id=1878707575]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource("1")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1255931432]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -351.0
+offset_right = 512.0
+offset_bottom = 351.0
+texture = ExtResource("2")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect2" unique_id=695622296]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.009
+anchor_right = 0.196
+anchor_bottom = 0.009
+offset_left = 104.0
+offset_top = 60.682
+offset_right = 33.938156
+offset_bottom = 91.60322
+scale = Vector2(6.605107, 6.074706)
+size_flags_stretch_ratio = 1.36
+theme_override_colors/font_color = Color(0.745098, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.0588235, 0.0784314, 0.517647, 1)
+theme_override_colors/font_outline_color = Color(0.0745098, 0.0156863, 0.0156863, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontFile_7783k")
+text = "GAME   OVER"
+
+[node name="Button" type="Button" parent="TextureRect2" unique_id=1071149604]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -463.0
+offset_top = -218.0
+offset_right = -113.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.34902, 0.541176, 0.878431, 1)
+theme_override_colors/font_focus_color = Color(0.380392, 0.0352941, 0.0352941, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_disabled_color = Color(0.360784, 0.109804, 0.109804, 1)
+theme_override_constants/h_separation = -1698
+theme_override_fonts/font = SubResource("FontFile_l8lmw")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n1w47")
+text = "RESTART"
+icon = ExtResource("3")
+flat = true
+icon_alignment = 1
+expand_icon = true

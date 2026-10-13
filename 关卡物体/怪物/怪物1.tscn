@@ -1,74 +1,178 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene format=3 uid="uid://bshfvhcickjb2"]
 
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-2.png" type="Texture" id=1]
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-3.png" type="Texture" id=2]
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-4.png" type="Texture" id=3]
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-5.png" type="Texture" id=4]
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-6.png" type="Texture" id=5]
-[ext_resource path="res://关卡物体/怪物/游戏素材/未命名作品-1.png" type="Texture" id=6]
+[ext_resource type="Texture2D" uid="uid://ba425uk57a2ns" path="res://关卡物体/怪物/游戏素材/未命名作品-2.png" id="1"]
+[ext_resource type="PackedScene" uid="uid://ox6pyf1rq7sk" path="res://关卡物体/怪物/消灭特效.tscn" id="1_k8eve"]
+[ext_resource type="Texture2D" uid="uid://bbs6kn7sfv2ot" path="res://关卡物体/怪物/游戏素材/未命名作品-3.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://4j57meujbhlx" path="res://关卡物体/怪物/游戏素材/未命名作品-4.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://yre1d0kxpmm7" path="res://关卡物体/怪物/游戏素材/未命名作品-5.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://bgy14blj5lw7p" path="res://关卡物体/怪物/游戏素材/未命名作品-6.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://x3g0c6qb8t0n" path="res://关卡物体/怪物/游戏素材/未命名作品-1.png" id="6"]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id="2"]
 script/source = "extends Node2D
 
 var WalkPath
 var CurrentSignIndex
-var MovingSpeed=100
-var HP=10
+var MovingSpeed = 100
+var HP = 12
+var MaxHP = 12
+var DropEXP = 20
+
+@onready var HealthBarNode = $HealthBarContainer/HealthBar/Progress  # 直接引用 TextureHealthBarNode 节点
+@export var 消灭特效: PackedScene
+var IsDead = false
+
+func _ready():
+	$\"动画\".play()  # 启动走路动画（Godot 4 无 playing 属性，需显式调用 play）
+	# 初始化血条
+	if HealthBarNode:
+		HealthBarNode.min_value = 0
+		HealthBarNode.max_value = MaxHP
+		HealthBarNode.value = HP
+		HealthBarNode.visible = true
 
 func PathSetting(CoordGroup):
-	WalkPath=CoordGroup
-	CurrentSignIndex=0
-	position=WalkPath[CurrentSignIndex]
-	
-	
+	WalkPath = CoordGroup
+	CurrentSignIndex = 0
+	position = WalkPath[CurrentSignIndex]
+	UpdateHealthBar()
+
 func _physics_process(delta):
-	if WalkPath!=null:
-		
-		var NextIndex=CurrentSignIndex+1
-		if NextIndex<WalkPath.size():
-			if position.distance_to(WalkPath[NextIndex])>2:
-				var MovingDirection:Vector2=WalkPath[NextIndex]-position
-				position+=MovingDirection.normalized()*MovingSpeed*delta
+	if IsDead:
+		return
+	if WalkPath != null:
+		var NextIndex = CurrentSignIndex + 1
+		if NextIndex < WalkPath.size():
+			if position.distance_to(WalkPath[NextIndex]) > 2:
+				var MovingDirection: Vector2 = WalkPath[NextIndex] - position
+				position += MovingDirection.normalized() * MovingSpeed * delta
 			else:
-				CurrentSignIndex+=1
-				
+				CurrentSignIndex += 1
+				UpdateHealthBarPosition()
+		else:
+			Die(true)
+
+
 func Getdamage(value):
-	HP-=value
-	print(\"Monster received damage, current HP: \", HP)
-	if HP<=0:
-		print(\"Monster is dead\")
-		queue_free()
+	# 防止怪物死亡后重复受到伤害、重复生成特效
+	if IsDead:
+		return
+
+	print(\"Monster received damage: \", value)
+	HP -= value
+	UpdateHealthBar()
+
+	if HP <= 0:
+		Die()
 
 
+func Die(escaped := false):
+	IsDead = true
+	GodOfGame.MonsterRemoved()
+	print(\"Monster is dead\")
 
+	# 停止怪物的走路动画
+	$\"动画\".stop()
+
+	# 生成死亡特效
+	if 消灭特效:
+		var 特效 = 消灭特效.instantiate()
+		get_parent().add_child(特效)
+		特效.global_position = global_position
+
+	# 发放经验（漏怪不发放）
+	if not escaped:
+		GodOfGame.AlterEXP(DropEXP)
+
+	# 删除怪物
+	queue_free()
+
+func UpdateHealthBar():
+	print(\"UpdateHealthBar called\")
+	if HealthBarNode:
+		print(\"HealthBarNode value before update: \", HealthBarNode.value)
+		HealthBarNode.value = HP
+		HealthBarNode.max_value = MaxHP
+		print(\"HealthBarNode value after update: \", HealthBarNode.value)
+
+func UpdateHealthBarPosition():
+	if HealthBarNode:
+		# 将血条固定在角色头顶
+		HealthBarNode.position = Vector2(-HealthBarNode.size.x / 10,10)
 "
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 13.5, 38 )
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(27, 76)
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ],
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}],
 "loop": true,
-"name": "走路",
+"name": &"走路",
 "speed": 6.0
-} ]
+}]
 
-[node name="怪物" type="Node2D"]
-script = SubResource( 2 )
+[node name="怪物" type="Node2D" unique_id=1622193796]
+position = Vector2(-23, 1)
+scale = Vector2(1.4049319, 1.4049319)
+script = SubResource("2")
+"消灭特效" = ExtResource("1_k8eve")
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 15.6249, 1.62493 )
+[node name="Area2D" type="Area2D" parent="." unique_id=2066618162]
+position = Vector2(15, 5)
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( -0.5, -9 )
-shape = SubResource( 3 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1144122980]
+position = Vector2(-0.5, -9)
+shape = SubResource("3")
 
-[node name="动画" type="AnimatedSprite" parent="."]
-position = Vector2( -7.37507, -0.375069 )
-scale = Vector2( 0.0679931, 0.0679931 )
-frames = SubResource( 1 )
-animation = "走路"
+[node name="动画" type="AnimatedSprite2D" parent="." unique_id=37266692]
+position = Vector2(-7.37507, -0.375069)
+scale = Vector2(0.0679931, 0.0679931)
+sprite_frames = SubResource("1")
+animation = &"走路"
 frame = 1
 flip_h = true
+
+[node name="HealthBarContainer" type="Node2D" parent="." unique_id=1715571525]
+position = Vector2(15, -54)
+
+[node name="HealthBar" type="Control" parent="HealthBarContainer" unique_id=1252500081]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -22.0
+offset_top = -14.0
+offset_right = 18.0
+offset_bottom = 26.0
+
+[node name="Progress" type="ProgressBar" parent="HealthBarContainer/HealthBar" unique_id=2146823965]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.159
+anchor_right = 2.051
+anchor_bottom = -0.159
+offset_left = -6.0
+offset_top = 19.359997
+offset_right = -2.0
+offset_bottom = 46.359997
+scale = Vector2(0.638526, 0.229135)
+theme_override_colors/font_color = Color(0.756863, 0, 0, 1)
+value = 100.0

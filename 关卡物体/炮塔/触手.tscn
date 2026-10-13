@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://bqh7mwciqaj5o"]
+
+[ext_resource type="PackedScene" uid="uid://cguhv3qgt1vro" path="res://关卡物体/子弹/触手aoe.tscn" id="2_cp8ue"]
+[ext_resource type="Texture2D" uid="uid://l66tydb4ryg5" path="res://关卡物体/炮塔/触手/未命名作品-1.png" id="2_lonhd"]
+[ext_resource type="Texture2D" uid="uid://qrmqcanl3vo6" path="res://关卡物体/炮塔/触手/未命名作品-2.png" id="3_cp8ue"]
+[ext_resource type="Texture2D" uid="uid://ur3urhjbk6oy" path="res://关卡物体/炮塔/触手/未命名作品-3.png" id="4_xf45b"]
+[ext_resource type="Texture2D" uid="uid://b3jig7mvhjqni" path="res://关卡物体/炮塔/触手/未命名作品-4.png" id="5_81npm"]
+[ext_resource type="Texture2D" uid="uid://y6fkr174alep" path="res://关卡物体/炮塔/触手/未命名作品-5.png" id="6_ll3a7"]
+[ext_resource type="Texture2D" uid="uid://jotk1x55b7bn" path="res://关卡物体/炮塔/触手/未命名作品-6.png" id="7_wbu7l"]
+[ext_resource type="Texture2D" uid="uid://gktim83v16qf" path="res://关卡物体/炮塔/触手/未命名作品-7.png" id="8_qq1ka"]
+[ext_resource type="Texture2D" uid="uid://bdmpn3mhxp2l5" path="res://关卡物体/炮塔/触手/未命名作品-8.png" id="9_d3aki"]
+[ext_resource type="Texture2D" uid="uid://batd72qepbp4d" path="res://关卡物体/炮塔/触手/未命名作品-9.png" id="10_74pl7"]
+[ext_resource type="AudioStream" uid="uid://bl1wmh6x4ljm0" path="res://游戏资源/音效/5CF93920-216F-4ed5-BA1A-F81DEBE4C27A(1).mp3" id="11_lonhd"]
+
+[sub_resource type="GDScript" id="2"]
+script/source = "
+extends Node2D
+
+@export var aoe_effect: PackedScene
+
+# AOE 攻击半径
+@export var aoe_radius: float = 200.0
+
+# 每次攻击造成的伤害
+@export var aoe_damage: float = 1.0
+
+var TargetList = []
+
+func _ready():
+	$\"计时器\".stop()
+	$AnimatedSprite2D.play()
+
+
+func _on__area_entered(area):
+	if not TargetList.has(area):
+		TargetList.append(area)
+
+	if not $\"计时器\".is_stopped():
+		return
+
+	$\"计时器\".start()
+
+
+func _on__area_exited(area):
+	TargetList.erase(area)
+
+	if TargetList.is_empty():
+		$\"计时器\".stop()
+
+
+func _on__timeout():
+	if TargetList.is_empty():
+		$\"计时器\".stop()
+		return
+	AOEAttack()
+
+
+
+
+func AOEAttack():
+	var attacked_targets = []
+
+	# 生成 AOE 攻击特效
+	if aoe_effect:
+		var effect = aoe_effect.instantiate()
+		get_tree().current_scene.add_child(effect)
+		effect.global_position = global_position
+
+	# 对攻击范围内的敌人造成伤害
+	for target in TargetList.duplicate():
+		if not is_instance_valid(target):
+			TargetList.erase(target)
+			continue
+
+		var distance = global_position.distance_to(
+			target.global_position
+		)
+
+
+		if distance <= aoe_radius:
+			var enemy = target
+
+# 如果检测到的是 Area2D，尝试获取它的父节点
+			if target is Area2D:
+				enemy = target.get_parent()
+
+# 判断怪物是否拥有受伤函数
+				if enemy.has_method(\"Getdamage\"):
+					enemy.Getdamage(aoe_damage)
+
+
+
+	# 每次攻击只播放一次音效
+	var player = $AudioStreamPlayer
+	if player.stream:
+		player.play()
+"
+
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lonhd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cp8ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xf45b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_81npm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ll3a7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wbu7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qq1ka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_d3aki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_74pl7")
+}],
+"loop": true,
+"name": &"眼球外星人",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="3"]
+radius = 967.0331
+
+[node name="箭塔2" type="Node2D" unique_id=2096838975]
+scale = Vector2(1.8144944, 1.8144944)
+script = SubResource("2")
+aoe_effect = ExtResource("2_cp8ue")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=151753668]
+position = Vector2(0.9999981, -8.999998)
+scale = Vector2(0.9433333, 0.90500003)
+sprite_frames = SubResource("1")
+animation = &"眼球外星人"
+frame_progress = 0.7348123
+metadata/_edit_group_ = true
+
+[node name="区域" type="Area2D" parent="." unique_id=497579907]
+collision_layer = 4
+
+[node name="CS2D" type="CollisionShape2D" parent="区域" unique_id=92469236]
+position = Vector2(1, 0)
+shape = SubResource("3")
+
+[node name="计时器" type="Timer" parent="." unique_id=1483633152]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=588695659]
+physics_interpolation_mode = 1
+stream = ExtResource("11_lonhd")
+pitch_scale = 0.55
+
+[connection signal="area_entered" from="区域" to="." method="_on__area_entered"]
+[connection signal="area_exited" from="区域" to="." method="_on__area_exited"]
+[connection signal="timeout" from="计时器" to="." method="_on__timeout"]

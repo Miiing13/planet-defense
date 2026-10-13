@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://cbjj2hg5mgwey"]
 
-[ext_resource path="res://游戏资源/图片/IMG_2203.PNG" type="Texture" id=1]
+[ext_resource type="Texture2D" uid="uid://de7bgy7wl8ng4" path="res://游戏资源/图片/IMG_2203.PNG" id="1"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends Node2D
 
 var monster1=load(\"res://关卡物体/怪物/怪物1.tscn\")
+# 是否已经确认本关所有波次都安排完毕
+var AllWavesScheduled = false
 
 var MonsterList=[{\"Name\":\"宇航员\",\"Scene\":load(\"res://关卡物体/怪物/怪物1.tscn\"),\"Number\":10,\"HatchedNumber\":0,\"IncubationInterval\":1,\"Timer\":Timer.new()},
 				{\"Name\":\"飞行器\",\"Scene\":load(\"res://关卡物体/怪物/怪物1.tscn\"),\"Number\":10,\"HatchedNumber\":0,\"IncubationInterval\":1,\"Timer\":Timer.new()}]
@@ -17,10 +19,19 @@ var TaskList=[]
 func _ready():
 	for i in MonsterList:
 		add_child(i.Timer)
+		i.Timer.connect(\"timeout\", Callable(self, \"HatchingCallback\").bind(i))
 
-func HatchMonster(Name,Way):
-	#print(TaskList)
-	TaskList.append({\"Name\":Name,\"Way\":Way})
+func HatchMonster(Name, Way):
+	var Item = GetListItemByName(Name)
+
+	if Item == null:
+		push_warning(\"找不到怪物类型：\" + Name)
+		return
+
+	TaskList.append({
+		\"Name\": Name,
+		\"Way\": Way
+	})
 
 func GetListItemByName(Name):
 	for Item in MonsterList:
@@ -38,41 +49,61 @@ func _physics_process(delta):
 			Item.Timer.wait_time=Item.IncubationInterval
 			Item.Timer.autostart=true
 			Item.HatchedNumber=0
-			Item.Timer.connect(\"timeout\",self,\"HatchingCallback\",[Item,TaskList[0].Way])
 			Item.Timer.start()
 			HatchingOrNot=true
 
 
 
-func HatchingCallback(Item,CoordGroup):
-	var MonsterSample=Item[\"Scene\"].instance()
-	SceneScheduling.CurrentLevel.add_child(MonsterSample)
-	MonsterSample.PathSetting(CoordGroup)
-	Item[\"HatchedNumber\"]+=1
-	if Item[\"HatchedNumber\"]>Item[\"Number\"]:
-		Item[\"Timer\"].stop()
-		TaskList.remove(0)
-		HatchingOrNot=false
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
+func HatchingCallback(Item):
+	# 如果当前任务已经结束，就停止计时
+	if TaskList.is_empty():
+		Item[\"Timer\"].stop()
+		return
+
+	var MonsterSample = Item[\"Scene\"].instantiate()
+	SceneScheduling.CurrentLevel.add_child(MonsterSample)
+	MonsterSample.PathSetting(TaskList[0][\"Way\"])
+
+	# 更新统计
+	GodOfGame.MonsterSpawned()
+	Item[\"HatchedNumber\"] += 1
+
+	# 达到规定数量就结束当前孵化任务
+	if Item[\"HatchedNumber\"] >= Item[\"Number\"]:
+		Item[\"Timer\"].stop()
+		TaskList.remove_at(0)
+		HatchingOrNot = false
+		CheckLevelSpawningFinished()
+
+# 由关卡管理器在最后一波安排完毕后调用
+func FinishSchedulingWaves():
+	AllWavesScheduled = true
+	CheckLevelSpawningFinished()
+
+
+# 检查是否所有孵化任务都已经完成
+func CheckLevelSpawningFinished():
+	if AllWavesScheduled and TaskList.is_empty() and not HatchingOrNot:
+		GodOfGame.FinishSpawning()
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 "
 
-[node name="Incubator" type="Node2D"]
-script = SubResource( 1 )
+[node name="Incubator" type="Node2D" unique_id=1620518063]
+script = SubResource("1")
 
-[node name="显示" type="Sprite" parent="."]
-position = Vector2( 5, 1.52588e-05 )
-scale = Vector2( 0.121831, 0.129795 )
-texture = ExtResource( 1 )
+[node name="显示" type="Sprite2D" parent="." unique_id=1269781181]
+position = Vector2(5, 1.52588e-05)
+scale = Vector2(0.121831, 0.129795)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 24.2009, 20.5003, 1102.48, 782.922 )
+region_rect = Rect2(24.2009, 20.5003, 1102.48, 782.922)

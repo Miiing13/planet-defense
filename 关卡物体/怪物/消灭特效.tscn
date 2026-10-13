@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ox6pyf1rq7sk"]
+
+[ext_resource type="Script" uid="uid://drnambu6ol6ls" path="res://关卡物体/怪物/消灭特效.gd" id="1_0g64j"]
+[ext_resource type="Texture2D" uid="uid://cppcktp75bwsc" path="res://游戏资源/图片/未命名作品-1 2.png" id="2_lib3a"]
+[ext_resource type="Texture2D" uid="uid://ob1rwryqqmtx" path="res://游戏资源/图片/未命名作品-2 2.png" id="3_wb7qc"]
+[ext_resource type="Texture2D" uid="uid://p2snlhvnroqe" path="res://游戏资源/图片/未命名作品-3 2.png" id="4_jntnu"]
+[ext_resource type="Texture2D" uid="uid://cncw8t7nje04g" path="res://游戏资源/图片/未命名作品-4 2.png" id="5_gbhci"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_28ogd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lib3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wb7qc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jntnu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gbhci")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]
+
+[node name="消灭特效" type="Node2D" unique_id=1113125156]
+script = ExtResource("1_0g64j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=117197714]
+position = Vector2(6.9999995, 0)
+scale = Vector2(0.8164769, 0.8164769)
+sprite_frames = SubResource("SpriteFrames_28ogd")
+animation = &"death"
+frame = 3
+frame_progress = 1.0

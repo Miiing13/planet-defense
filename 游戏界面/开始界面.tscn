@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene format=3 uid="uid://bk5qb27m4uf0y"]
 
-[ext_resource path="res://游戏资源/图片/微信图片_20240208132721.jpg" type="Texture" id=1]
-[ext_resource path="res://游戏资源/图片/开始按钮.png" type="Texture" id=2]
-[ext_resource path="res://游戏资源/图片/设置按钮.PNG" type="Texture" id=3]
-[ext_resource path="res://游戏资源/图片/结束按钮.PNG" type="Texture" id=4]
+[ext_resource type="Texture2D" uid="uid://dsoxv44scnwvb" path="res://游戏资源/图片/微信图片_20240208132721.jpg" id="1"]
+[ext_resource type="Texture2D" uid="uid://cyiul5oopsuwp" path="res://游戏资源/图片/开始按钮.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dcju452iu3kw5" path="res://游戏资源/图片/设置按钮.PNG" id="3"]
+[ext_resource type="Texture2D" uid="uid://b86nrmyuqodia" path="res://游戏资源/图片/结束按钮.PNG" id="4"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends Control
 
 
@@ -17,61 +17,65 @@ func _on_start_gui_input(event):
 
 func _on_setting_gui_input(event):
 	if Input.is_action_just_pressed(\"左键\"):
-		print(\"您点击了设置项\")
+		SceneScheduling.sceneswich(\"res://游戏界面/设置界面.tscn\")
 
 func _on_end_gui_input(event):
 	if Input.is_action_just_pressed(\"左键\"):
 		get_tree().quit()
-
 "
 
-[node name="开始界面" type="Control"]
+[node name="开始界面" type="Control" unique_id=721912117]
+layout_mode = 3
 anchor_right = 1.033
 anchor_bottom = 1.217
-margin_right = -33.792
-margin_bottom = -0.200012
-script = SubResource( 1 )
+offset_right = -33.792
+offset_bottom = -0.200012
+script = SubResource("1")
 
-[node name="背景" type="TextureRect" parent="."]
+[node name="背景" type="TextureRect" parent="." unique_id=942702948]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 0.818
-margin_left = -1.0
-margin_top = -5.0
-margin_right = -2.0
-margin_bottom = 72.86
-texture = ExtResource( 1 )
-expand = true
+offset_left = -5.0
+offset_top = -54.0
+offset_right = 4.0
+offset_bottom = 64.86
+texture = ExtResource("1")
+expand_mode = 1
 
-[node name="开始按钮" type="NinePatchRect" parent="."]
-margin_left = 358.0
-margin_top = 162.0
-margin_right = 637.0
-margin_bottom = 316.0
+[node name="开始按钮" type="NinePatchRect" parent="." unique_id=1674642589]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 131.0
+offset_right = 646.0
+offset_bottom = 312.0
 mouse_filter = 1
-texture = ExtResource( 2 )
-region_rect = Rect2( 53.5756, 226.061, 1457.99, 643.115 )
-patch_margin_left = 135
-patch_margin_top = 11
-patch_margin_right = 79
-patch_margin_bottom = 143
+texture = ExtResource("2")
+region_rect = Rect2(55.362305, 193.08954, 1431.124, 696.73145)
+patch_margin_left = 17
+patch_margin_top = 33
+patch_margin_right = 25
+patch_margin_bottom = 15
 
-[node name="设置按钮" type="NinePatchRect" parent="."]
-margin_left = 883.0
-margin_top = -12.0
-margin_right = 1039.0
-margin_bottom = 140.0
+[node name="设置按钮" type="NinePatchRect" parent="." unique_id=1487800000]
+layout_mode = 0
+offset_left = 883.0
+offset_top = -12.0
+offset_right = 1039.0
+offset_bottom = 140.0
 mouse_filter = 1
-texture = ExtResource( 3 )
-region_rect = Rect2( 278.767, -31.9505, 1669.7, 1661.71 )
+texture = ExtResource("3")
+region_rect = Rect2(278.767, -31.9505, 1669.7, 1661.71)
 
-[node name="结束按钮" type="NinePatchRect" parent="."]
-margin_left = 405.0
-margin_top = 335.0
-margin_right = 586.0
-margin_bottom = 446.0
+[node name="结束按钮" type="NinePatchRect" parent="." unique_id=1660379966]
+layout_mode = 0
+offset_left = 405.0
+offset_top = 335.0
+offset_right = 586.0
+offset_bottom = 446.0
 mouse_filter = 1
-texture = ExtResource( 4 )
-region_rect = Rect2( 56.6871, 315.802, 2302.22, 1054.07 )
+texture = ExtResource("4")
+region_rect = Rect2(56.6871, 315.802, 2302.22, 1054.07)
 
 [connection signal="gui_input" from="开始按钮" to="." method="_on_start_gui_input"]
 [connection signal="gui_input" from="设置按钮" to="." method="_on_setting_gui_input"]

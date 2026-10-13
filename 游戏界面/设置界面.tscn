@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" uid="uid://dsoxv44scnwvb" path="res://游戏资源/图片/微信图片_20240208132721.jpg" id="1"]
+[ext_resource type="Script" path="res://游戏界面/设置界面.gd" id="2"]
+
+[sub_resource type="SystemFont" id="1"]
+font_names = PackedStringArray("Microsoft YaHei", "微软雅黑", "Microsoft YaHei UI")
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.05, 0.05, 0.08, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="设置界面" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2")
+
+[node name="背景" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("1")
+expand_mode = 1
+
+[node name="面板" type="Panel" parent="."]
+offset_left = 240.0
+offset_top = 100.0
+offset_right = 784.0
+offset_bottom = 560.0
+theme_override_styles/panel = SubResource("2")
+
+[node name="标题" type="Label" parent="."]
+offset_left = 240.0
+offset_top = 120.0
+offset_right = 784.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 40
+text = "设置"
+horizontal_alignment = 1
+
+[node name="音乐音量" type="Label" parent="."]
+offset_left = 300.0
+offset_top = 210.0
+offset_right = 460.0
+offset_bottom = 250.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 24
+text = "音乐音量"
+
+[node name="音乐音量滑条" type="HSlider" parent="."]
+offset_left = 480.0
+offset_top = 210.0
+offset_right = 720.0
+offset_bottom = 250.0
+max_value = 100.0
+value = 100.0
+
+[node name="音效音量" type="Label" parent="."]
+offset_left = 300.0
+offset_top = 300.0
+offset_right = 460.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 24
+text = "音效音量"
+
+[node name="音效音量滑条" type="HSlider" parent="."]
+offset_left = 480.0
+offset_top = 300.0
+offset_right = 720.0
+offset_bottom = 340.0
+max_value = 100.0
+value = 100.0
+
+[node name="全屏按钮" type="Button" parent="."]
+offset_left = 380.0
+offset_top = 400.0
+offset_right = 644.0
+offset_bottom = 452.0
+theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 24
+text = "全屏"
+
+[node name="返回按钮" type="Button" parent="."]
+offset_left = 380.0
+offset_top = 480.0
+offset_right = 644.0
+offset_bottom = 532.0
+theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 24
+text = "返回"
+
+[connection signal="value_changed" from="音乐音量滑条" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="音效音量滑条" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="全屏按钮" to="." method="_on_fullscreen_pressed"]
+[connection signal="pressed" from="返回按钮" to="." method="_on_back_pressed"]

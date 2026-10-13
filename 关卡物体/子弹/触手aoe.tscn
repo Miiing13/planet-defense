@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cguhv3qgt1vro"]
+
+[ext_resource type="Texture2D" uid="uid://bhql5scpkq7n8" path="res://关卡物体/子弹/触手aoe/未命名作品-1(1) - 副本.png" id="1_mnvae"]
+[ext_resource type="Texture2D" uid="uid://ygqjlvhudhxe" path="res://关卡物体/子弹/触手aoe/未命名作品-2(1) - 副本.png" id="2_d2sro"]
+[ext_resource type="Texture2D" uid="uid://clv1poxq3uyvr" path="res://关卡物体/子弹/触手aoe/未命名作品-3(1) - 副本.png" id="3_mik57"]
+[ext_resource type="Texture2D" uid="uid://v0bveq8pnbak" path="res://关卡物体/子弹/触手aoe/未命名作品-4(1) - 副本.png" id="4_y5dfe"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Node2D
+
+func _ready():
+	var sprite = $AnimatedSprite2D
+	sprite.animation = \"aoe\"
+	sprite.frame = 0
+	sprite.play()
+
+	sprite.animation_finished.connect(_on_animation_finished)
+
+func _on_animation_finished():
+	queue_free()
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s2yqn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mnvae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_d2sro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mik57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_y5dfe")
+}],
+"loop": false,
+"name": &"aoe",
+"speed": 6.0
+}]
+
+[node name="触手aoe" type="Node2D" unique_id=1352156615]
+script = SubResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1716543994]
+scale = Vector2(1.784538, 1.703972)
+sprite_frames = SubResource("SpriteFrames_s2yqn")
+animation = &"aoe"
+frame = 2
