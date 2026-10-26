@@ -1,12 +1,19 @@
 [gd_scene format=3 uid="uid://c26vssat8eqq7"]
 
-[ext_resource type="PackedScene" path="res://关卡物体/地图/地图1.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://b78qvuqydtjw4" path="res://关卡物体/地图/地图1.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cbjj2hg5mgwey" path="res://关卡物体/孵化/孵化器.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://bwnlpkgilguq" path="res://关卡物体/据点/据点.tscn" id="3"]
+[ext_resource type="Script" uid="uid://ctavvpmywnema" path="res://游戏界面/线路ui.gd" id="3_h2xsl"]
 [ext_resource type="PackedScene" path="res://关卡物体/路标/路标.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://b720yhrdt3qxl" path="res://关卡物体/建造/建造器.tscn" id="6"]
+[ext_resource type="Texture2D" uid="uid://c4eoguh42rgd5" path="res://关卡物体/建造/图片/未命名作品-1(3).png" id="6_e1xl1"]
 [ext_resource type="PackedScene" path="res://关卡物体/Ui/状态.tscn" id="7"]
+[ext_resource type="Texture2D" uid="uid://cnwaww876r2wp" path="res://关卡物体/建造/图片/未命名作品-2(3).png" id="7_h2xsl"]
 [ext_resource type="PackedScene" uid="uid://dvvfvc02h5nmr" path="res://关卡物体/Ui/控制按钮.tscn" id="8"]
+[ext_resource type="Texture2D" uid="uid://cl3epsrdwinlj" path="res://关卡物体/建造/图片/未命名作品-3(3).png" id="8_g6jvb"]
+[ext_resource type="PackedScene" uid="uid://cfapjduigrr1t" path="res://关卡物体/建造/菜单.tscn" id="8_pepst"]
+[ext_resource type="Texture2D" uid="uid://ct5voscwgay5q" path="res://关卡物体/建造/图片/未命名作品-4(3).png" id="9_s7tk6"]
+[ext_resource type="Shader" uid="uid://qvaiyiona6g1" path="res://shader/Level1.gdshader" id="14_g6jvb"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends Node2D
@@ -14,6 +21,7 @@ script/source = "extends Node2D
 var way1=[\"路标0\",\"路标2\",\"路标3\",\"路标4\",\"路标5\",\"路标6\",\"路标7\",\"路标8\",\"路标9\",\"路标10\"]
 
 @onready var Incubator=$\"孵化器\"
+@onready var tower_menu=$\"菜单\"
 
 func GetCoordbyPath(SignGroup):
 	var CoordGroup=[]
@@ -34,72 +42,147 @@ func _ready():
 	Incubator.FinishSchedulingWaves()
 "
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_2wa2f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_e1xl1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_h2xsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_g6jvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_s7tk6")
+}],
+"loop": true,
+"name": &"Direction",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7tk6"]
+shader = ExtResource("14_g6jvb")
+shader_parameter/light_color = Color(0.4, 0.5, 0.8, 1)
+shader_parameter/intensity = 0.15
+shader_parameter/speed = 0.2
+
 [node name="关卡1" type="Node2D" unique_id=42361005]
 script = SubResource("1")
 
 [node name="地图" parent="." unique_id=1235868127 instance=ExtResource("1")]
+z_index = -1
+
+[node name="菜单" parent="." unique_id=1177476985 instance=ExtResource("8_pepst")]
+visible = false
+offset_left = 400.0
+offset_top = 112.000015
+offset_right = 400.0
+offset_bottom = 112.000015
+scale = Vector2(0.52969706, 0.52969706)
+
+[node name="线路ui" type="Node" parent="." unique_id=1829329591]
+script = ExtResource("3_h2xsl")
+
+[node name="Direction1" type="AnimatedSprite2D" parent="线路ui" unique_id=937192565]
+position = Vector2(920, 136.00002)
+rotation = -1.5707964
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction2" type="AnimatedSprite2D" parent="线路ui" unique_id=1172046421]
+position = Vector2(824, 144)
+rotation = -3.1415925
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction3" type="AnimatedSprite2D" parent="线路ui" unique_id=837283899]
+position = Vector2(792, 448)
+rotation = -1.5707964
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction4" type="AnimatedSprite2D" parent="线路ui" unique_id=655809317]
+position = Vector2(616, 432)
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction5" type="AnimatedSprite2D" parent="线路ui" unique_id=830783553]
+position = Vector2(568, 127.999985)
+rotation = -1.5707964
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction6" type="AnimatedSprite2D" parent="线路ui" unique_id=315336995]
+position = Vector2(344, 128)
+rotation = -3.1415925
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction7" type="AnimatedSprite2D" parent="线路ui" unique_id=392741414]
+position = Vector2(304, 448)
+rotation = -1.5707964
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction8" type="AnimatedSprite2D" parent="线路ui" unique_id=1564665508]
+position = Vector2(152, 432)
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
+
+[node name="Direction9" type="AnimatedSprite2D" parent="线路ui" unique_id=766306507]
+position = Vector2(128, 160)
+rotation = -1.5707964
+scale = Vector2(1.7951866, 1.6796196)
+sprite_frames = SubResource("SpriteFrames_2wa2f")
+animation = &"Direction"
 
 [node name="据点" parent="." unique_id=451052450 instance=ExtResource("3")]
 position = Vector2(69, 157)
 
 [node name="孵化器" parent="." unique_id=981162325 instance=ExtResource("2")]
-position = Vector2(922, 96)
+position = Vector2(936, 88)
 
 [node name="路径" type="Node2D" parent="." unique_id=293304925]
 
 [node name="路标0" parent="路径" unique_id=1979372226 instance=ExtResource("5")]
-position = Vector2(925, 142)
+position = Vector2(928, 120)
 
 [node name="路标2" parent="路径" unique_id=218572425 instance=ExtResource("5")]
-position = Vector2(817, 142)
+position = Vector2(808, 120)
 
 [node name="路标3" parent="路径" unique_id=174712329 instance=ExtResource("5")]
-position = Vector2(817, 468)
+position = Vector2(808, 416)
 
 [node name="路标4" parent="路径" unique_id=2072947624 instance=ExtResource("5")]
-position = Vector2(580, 473)
+position = Vector2(592, 416)
 
 [node name="路标5" parent="路径" unique_id=1950295810 instance=ExtResource("5")]
-position = Vector2(574, 102)
+position = Vector2(592, 104)
 
 [node name="路标6" parent="路径" unique_id=1949868404 instance=ExtResource("5")]
 position = Vector2(319, 102)
 
 [node name="路标7" parent="路径" unique_id=581091004 instance=ExtResource("5")]
-position = Vector2(316, 453)
+position = Vector2(320, 416)
 
 [node name="路标8" parent="路径" unique_id=646468826 instance=ExtResource("5")]
-position = Vector2(135, 453)
+position = Vector2(128, 416)
 
 [node name="路标9" parent="路径" unique_id=278128814 instance=ExtResource("5")]
-position = Vector2(133, 163)
+position = Vector2(128, 152)
 
 [node name="路标10" parent="路径" unique_id=36092416 instance=ExtResource("5")]
-position = Vector2(51, 163)
-
-[node name="建造器" parent="." unique_id=1542121766 instance=ExtResource("6")]
-position = Vector2(768, 536)
-scale = Vector2(0.5, 0.5)
-
-[node name="建造器2" parent="." unique_id=516953026 instance=ExtResource("6")]
-position = Vector2(640, 536)
-scale = Vector2(0.5, 0.5)
-
-[node name="建造器3" parent="." unique_id=830235204 instance=ExtResource("6")]
-position = Vector2(399, 186)
-scale = Vector2(0.5, 0.5)
-
-[node name="建造器4" parent="." unique_id=1988154258 instance=ExtResource("6")]
-position = Vector2(400, 295)
-scale = Vector2(0.5, 0.5)
-
-[node name="建造器5" parent="." unique_id=514776535 instance=ExtResource("6")]
-position = Vector2(400, 536)
-scale = Vector2(0.5, 0.5)
-
-[node name="建造器6" parent="." unique_id=969148535 instance=ExtResource("6")]
-position = Vector2(272, 536)
-scale = Vector2(0.5, 0.5)
+position = Vector2(56, 152)
 
 [node name="状态" parent="." unique_id=1456498632 instance=ExtResource("7")]
 layout_mode = 3
@@ -120,3 +203,40 @@ offset_bottom = -6.999999
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.059891712, 0.058823925)
+
+[node name="建造器" type="Node2D" parent="." unique_id=801418595]
+
+[node name="建造器1" parent="建造器" unique_id=1542121766 instance=ExtResource("6")]
+position = Vector2(768, 544)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器2" parent="建造器" unique_id=516953026 instance=ExtResource("6")]
+position = Vector2(608, 544)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器3" parent="建造器" unique_id=830235204 instance=ExtResource("6")]
+position = Vector2(432, 224)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器4" parent="建造器" unique_id=1988154258 instance=ExtResource("6")]
+position = Vector2(432, 304)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器5" parent="建造器" unique_id=514776535 instance=ExtResource("6")]
+position = Vector2(320, 536)
+scale = Vector2(0.5, 0.5)
+
+[node name="建造器6" parent="建造器" unique_id=969148535 instance=ExtResource("6")]
+position = Vector2(152, 536)
+scale = Vector2(0.5, 0.5)
+
+[node name="LightEffect" type="CanvasLayer" parent="." unique_id=2059225681]
+
+[node name="LightOverlay" type="ColorRect" parent="LightEffect" unique_id=855638523]
+material = SubResource("ShaderMaterial_s7tk6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://bns8mnfec0601"]
 
-[ext_resource path="res://游戏资源/图片/bd0b9a7496079d5b8b62cc4404d49d0.jpg" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://b5ocjfkxmemof" path="res://游戏资源/图片/bd0b9a7496079d5b8b62cc4404d49d0.jpg" id="1"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends Control
 
 
@@ -45,21 +45,25 @@ func namedeal(Originalname:String):
 	return group[0]
 "
 
-[node name="关卡选择" type="Control"]
+[node name="关卡选择" type="Control" unique_id=1860633449]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = SubResource( 1 )
+script = SubResource("1")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1157403289]
+layout_mode = 0
 offset_left = -6.0
 offset_top = -91.0
 offset_right = 1029.0
 offset_bottom = 666.0
-scale = Vector2( 1, 0.943998 )
-texture = ExtResource( 1 )
+scale = Vector2(1, 0.943998)
+texture = ExtResource("1")
 expand_mode = 1
 
-[node name="网格容器" type="GridContainer" parent="."]
+[node name="网格容器" type="GridContainer" parent="." unique_id=115465093]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 46.0
 offset_right = 873.0

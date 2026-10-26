@@ -135,7 +135,7 @@ animations = [{
 radius = 967.0331
 
 [node name="箭塔2" type="Node2D" unique_id=2096838975]
-scale = Vector2(1.8144944, 1.8144944)
+scale = Vector2(1.4219004, 1.4219004)
 script = SubResource("2")
 aoe_effect = ExtResource("2_cp8ue")
 
@@ -152,6 +152,7 @@ collision_layer = 4
 
 [node name="CS2D" type="CollisionShape2D" parent="区域" unique_id=92469236]
 position = Vector2(1, 0)
+scale = Vector2(0.26674184, 0.26674184)
 shape = SubResource("3")
 
 [node name="计时器" type="Timer" parent="." unique_id=1483633152]

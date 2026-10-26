@@ -9,4 +9,3 @@ func changename(name):
 func _on_NinePatchRect_gui_input(event):
 	if Input.is_action_just_pressed("左键"):
 		SceneScheduling.sceneswich("res://游戏关卡/"+level+".tscn")
-

@@ -27,6 +27,7 @@ animations = [{
 }]
 
 [node name="消灭特效" type="Node2D" unique_id=1113125156]
+scale = Vector2(0.71088886, 0.71088886)
 script = ExtResource("1_0g64j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=117197714]

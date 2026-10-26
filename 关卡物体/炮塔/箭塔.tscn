@@ -13,6 +13,7 @@
 script/source = "extends Node2D
 
 @export var Bullet: PackedScene
+@export var tower_menu: Control
 
 var TargetList=[]
 
@@ -46,7 +47,15 @@ func _process(delta):
 		var direction = (target_position - global_position).normalized()
 		var target_angle = direction.angle()
 		rotation = target_angle - deg_to_rad(initial_facing_angle)
-	
+
+func _on_点击区域_input_event(viewport: Node, event: InputEvent, shape_idx: int):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var menu = get_tree().get_first_node_in_group(\"tower_menu\")
+
+			if menu:
+				var center = $\"点击区域/CollisionShape2D\".global_position
+				menu.show_menu(self,center)
 "
 
 [sub_resource type="SpriteFrames" id="1"]
@@ -78,8 +87,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="3"]
 radius = 411.311
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_14u7r"]
+
 [node name="箭塔" type="Node2D" unique_id=2096838975]
-scale = Vector2(1.7550526, 1.7550526)
+scale = Vector2(1.4818363, 1.4818363)
 script = SubResource("2")
 Bullet = ExtResource("1")
 
@@ -105,6 +116,16 @@ autostart = true
 physics_interpolation_mode = 1
 stream = ExtResource("2")
 
+[node name="点击区域" type="Area2D" parent="." unique_id=391744620]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="点击区域" unique_id=1484335597]
+position = Vector2(0.5697835, -22.79134)
+scale = Vector2(6.6773834, 7.969352)
+shape = SubResource("CircleShape2D_14u7r")
+
 [connection signal="area_entered" from="区域" to="." method="_on__area_entered"]
 [connection signal="area_exited" from="区域" to="." method="_on__area_exited"]
 [connection signal="timeout" from="计时器" to="." method="_on__timeout"]
+[connection signal="input_event" from="点击区域" to="." method="_on_点击区域_input_event"]

@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://cfapjduigrr1t"]
+
+[ext_resource type="Script" uid="uid://dp1iw04j5o8uu" path="res://关卡物体/建造/菜单.gd" id="1_b3eu1"]
+[ext_resource type="Texture2D" uid="uid://cj1duub2628cn" path="res://游戏资源/图片/建造框.png" id="2_4lwb3"]
+[ext_resource type="Texture2D" uid="uid://c4eoguh42rgd5" path="res://关卡物体/建造/图片/未命名作品-1(3).png" id="3_gqajh"]
+[ext_resource type="Texture2D" uid="uid://cnwaww876r2wp" path="res://关卡物体/建造/图片/未命名作品-2(3).png" id="4_xgm7i"]
+[ext_resource type="Texture2D" uid="uid://cl3epsrdwinlj" path="res://关卡物体/建造/图片/未命名作品-3(3).png" id="5_i6mhq"]
+[ext_resource type="Texture2D" uid="uid://ct5voscwgay5q" path="res://关卡物体/建造/图片/未命名作品-4(3).png" id="6_x5awr"]
+[ext_resource type="Texture2D" uid="uid://kckrxxijt7h" path="res://关卡物体/建造/图片/未命名作品-1(2).png" id="7_4mlpf"]
+[ext_resource type="Texture2D" uid="uid://cxvddgx04vhgm" path="res://关卡物体/建造/图片/未命名作品-2(2).png" id="8_crfp2"]
+[ext_resource type="Texture2D" uid="uid://dadl800yep8n2" path="res://关卡物体/建造/图片/未命名作品-3(2).png" id="9_ykwe5"]
+[ext_resource type="Texture2D" uid="uid://bbecds8xnk6pw" path="res://关卡物体/建造/图片/未命名作品-4(2).png" id="10_mtpsw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vmlfm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_gqajh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xgm7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i6mhq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_x5awr")
+}],
+"loop": true,
+"name": &"Upgrade",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x0ift"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_4mlpf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_crfp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ykwe5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_mtpsw")
+}],
+"loop": true,
+"name": &"Delete",
+"speed": 5.0
+}]
+
+[node name="菜单" type="Control" unique_id=1384150251 groups=["tower_menu"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_b3eu1")
+
+[node name="MenuPanel" type="NinePatchRect" parent="." unique_id=1059545384]
+layout_mode = 0
+offset_left = -54.0
+offset_top = -54.0
+offset_right = 55.0
+offset_bottom = 52.0
+mouse_filter = 1
+texture = ExtResource("2_4lwb3")
+region_rect = Rect2(23.332642, 25.000328, 250.00003, 253.35486)
+patch_margin_left = 4
+patch_margin_top = 6
+patch_margin_right = 4
+patch_margin_bottom = 7
+
+[node name="UpgradeButton" type="Button" parent="." unique_id=977127374]
+layout_mode = 0
+offset_left = -161.0
+offset_top = -55.000004
+offset_right = -153.0
+offset_bottom = -46.000004
+scale = Vector2(12.061762, 12.061762)
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UpgradeButton" unique_id=2082775072]
+position = Vector2(4.0393004, 4.4942713)
+scale = Vector2(0.45055687, 0.38395777)
+sprite_frames = SubResource("SpriteFrames_vmlfm")
+animation = &"Upgrade"
+
+[node name="DeleteButton" type="Button" parent="." unique_id=151569328]
+layout_mode = 0
+offset_left = 53.999985
+offset_top = -55.000004
+offset_right = 61.999985
+offset_bottom = -46.000004
+scale = Vector2(13.512859, 13.512859)
+flat = true
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="DeleteButton" unique_id=696839871]
+position = Vector2(3.9999998, 3.9999998)
+scale = Vector2(0.36424032, 0.36424032)
+sprite_frames = SubResource("SpriteFrames_x0ift")
+animation = &"Delete"
+frame_progress = 0.13103169
+
+[connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]

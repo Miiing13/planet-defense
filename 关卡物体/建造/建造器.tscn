@@ -29,6 +29,7 @@ func Build():
 		add_child(tower1.instantiate())
 		BuildableOrNot = false
 		$\"选单\".visible = false
+		$\"NinePatchRect\".visible = false
 		GodOfGame.AlterEXP(-tower1Cost)
 
 
@@ -64,13 +65,13 @@ offset_left = -54.0
 offset_top = -54.0
 offset_right = 55.0
 offset_bottom = 52.0
-mouse_filter = 1
+mouse_filter = 0
 texture = ExtResource("1")
-region_rect = Rect2(32.4316, 25.8142, 235.273, 252.541)
-patch_margin_left = 55
-patch_margin_top = 48
-patch_margin_right = 54
-patch_margin_bottom = 58
+region_rect = Rect2(23.332642, 25.000328, 250.00003, 253.35486)
+patch_margin_left = 4
+patch_margin_top = 6
+patch_margin_right = 4
+patch_margin_bottom = 7
 
 [node name="选单" type="Control" parent="." unique_id=1328369082]
 layout_mode = 3

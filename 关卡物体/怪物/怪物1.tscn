@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bshfvhcickjb2"]
 
-[ext_resource type="Texture2D" uid="uid://ba425uk57a2ns" path="res://关卡物体/怪物/游戏素材/未命名作品-2.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://ox6pyf1rq7sk" path="res://关卡物体/怪物/消灭特效.tscn" id="1_k8eve"]
-[ext_resource type="Texture2D" uid="uid://bbs6kn7sfv2ot" path="res://关卡物体/怪物/游戏素材/未命名作品-3.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://4j57meujbhlx" path="res://关卡物体/怪物/游戏素材/未命名作品-4.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://yre1d0kxpmm7" path="res://关卡物体/怪物/游戏素材/未命名作品-5.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://bgy14blj5lw7p" path="res://关卡物体/怪物/游戏素材/未命名作品-6.png" id="5"]
-[ext_resource type="Texture2D" uid="uid://x3g0c6qb8t0n" path="res://关卡物体/怪物/游戏素材/未命名作品-1.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://bggymenjpqr8j" path="res://关卡物体/怪物/游戏素材/未命名作品-1(4).png" id="2_k8eve"]
+[ext_resource type="Texture2D" uid="uid://p7jvmjpuge0x" path="res://关卡物体/怪物/游戏素材/未命名作品-2(4).png" id="3_fjowr"]
+[ext_resource type="Texture2D" uid="uid://bnkwwc5mdw1ah" path="res://关卡物体/怪物/游戏素材/未命名作品-3(4).png" id="4_42jn3"]
+[ext_resource type="Texture2D" uid="uid://bgxaa3o3h2ibj" path="res://关卡物体/怪物/游戏素材/未命名作品-4(4).png" id="5_kogfv"]
+[ext_resource type="Texture2D" uid="uid://ds5lfhs86i0s4" path="res://关卡物体/怪物/游戏素材/未命名作品-5(1).png" id="6_8cj3m"]
+[ext_resource type="Texture2D" uid="uid://cfvdyoldfyydj" path="res://关卡物体/怪物/游戏素材/未命名作品-6(1).png" id="7_yyu81"]
 
 [sub_resource type="GDScript" id="2"]
 script/source = "extends Node2D
@@ -108,22 +108,22 @@ size = Vector2(27, 76)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1")
+"texture": ExtResource("2_k8eve")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6")
+"texture": ExtResource("3_fjowr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2")
+"texture": ExtResource("4_42jn3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3")
+"texture": ExtResource("5_kogfv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4")
+"texture": ExtResource("6_8cj3m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5")
+"texture": ExtResource("7_yyu81")
 }],
 "loop": true,
 "name": &"走路",
@@ -131,8 +131,8 @@ animations = [{
 }]
 
 [node name="怪物" type="Node2D" unique_id=1622193796]
-position = Vector2(-23, 1)
-scale = Vector2(1.4049319, 1.4049319)
+position = Vector2(-18, -19)
+scale = Vector2(1.2913307, 1.2913307)
 script = SubResource("2")
 "消灭特效" = ExtResource("1_k8eve")
 
@@ -145,11 +145,11 @@ position = Vector2(-0.5, -9)
 shape = SubResource("3")
 
 [node name="动画" type="AnimatedSprite2D" parent="." unique_id=37266692]
-position = Vector2(-7.37507, -0.375069)
-scale = Vector2(0.0679931, 0.0679931)
+position = Vector2(12.390319, -5.420764)
+scale = Vector2(0.29472044, 0.29472044)
 sprite_frames = SubResource("1")
 animation = &"走路"
-frame = 1
+frame_progress = 0.4977645
 flip_h = true
 
 [node name="HealthBarContainer" type="Node2D" parent="." unique_id=1715571525]

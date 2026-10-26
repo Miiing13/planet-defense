@@ -1,27 +1,26 @@
 [gd_scene format=3 uid="uid://bk5qb27m4uf0y"]
 
 [ext_resource type="Texture2D" uid="uid://dsoxv44scnwvb" path="res://游戏资源/图片/微信图片_20240208132721.jpg" id="1"]
-[ext_resource type="Texture2D" uid="uid://cyiul5oopsuwp" path="res://游戏资源/图片/开始按钮.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://pewkngemvdkf" path="res://游戏资源/图片/1.png" id="2_mn07o"]
+[ext_resource type="FontFile" uid="uid://b2t6a0cd1jumu" path="res://游戏资源/HooskaiChamferedSquare.ttf" id="2_nttbu"]
 [ext_resource type="Texture2D" uid="uid://dcju452iu3kw5" path="res://游戏资源/图片/设置按钮.PNG" id="3"]
-[ext_resource type="Texture2D" uid="uid://b86nrmyuqodia" path="res://游戏资源/图片/结束按钮.PNG" id="4"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends Control
 
 
 
-func _on_start_gui_input(event):
-	if Input.is_action_just_pressed(\"左键\"):
-		SceneScheduling.sceneswich(\"res://游戏界面/关卡选择.tscn\")
-
-
 func _on_setting_gui_input(event):
 	if Input.is_action_just_pressed(\"左键\"):
 		SceneScheduling.sceneswich(\"res://游戏界面/设置界面.tscn\")
 
-func _on_end_gui_input(event):
-	if Input.is_action_just_pressed(\"左键\"):
-		get_tree().quit()
+
+func _on_开始按钮_pressed() -> void:
+	SceneScheduling.sceneswich(\"res://游戏界面/关卡选择.tscn\")
+
+
+func _on_结束按钮_pressed() -> void:
+	get_tree().quit()
 "
 
 [node name="开始界面" type="Control" unique_id=721912117]
@@ -43,19 +42,25 @@ offset_bottom = 64.86
 texture = ExtResource("1")
 expand_mode = 1
 
-[node name="开始按钮" type="NinePatchRect" parent="." unique_id=1674642589]
+[node name="开始按钮" type="Button" parent="." unique_id=1908166692]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 131.0
-offset_right = 646.0
-offset_bottom = 312.0
-mouse_filter = 1
-texture = ExtResource("2")
-region_rect = Rect2(55.362305, 193.08954, 1431.124, 696.73145)
-patch_margin_left = 17
-patch_margin_top = 33
-patch_margin_right = 25
-patch_margin_bottom = 15
+offset_left = 312.0
+offset_top = 152.0
+offset_right = 1918.0
+offset_bottom = 1240.0
+scale = Vector2(0.24853015, 0.2497885)
+theme_override_colors/font_color = Color(0.50431603, 0.82631445, 0.956536, 1)
+theme_override_colors/font_focus_color = Color(0.34901962, 0.7529412, 0.90588236, 1)
+theme_override_colors/font_pressed_color = Color(0.86767256, 0.30068865, 0.36108124, 1)
+theme_override_colors/font_hover_color = Color(0.34901962, 0.7529412, 0.90588236, 1)
+theme_override_colors/icon_pressed_color = Color(0.49094045, 0.16086146, 0.17144993, 1)
+theme_override_constants/outline_size = 28
+theme_override_fonts/font = ExtResource("2_nttbu")
+theme_override_font_sizes/font_size = 237
+text = "START"
+icon = ExtResource("2_mn07o")
+flat = true
+icon_alignment = 1
 
 [node name="设置按钮" type="NinePatchRect" parent="." unique_id=1487800000]
 layout_mode = 0
@@ -67,16 +72,26 @@ mouse_filter = 1
 texture = ExtResource("3")
 region_rect = Rect2(278.767, -31.9505, 1669.7, 1661.71)
 
-[node name="结束按钮" type="NinePatchRect" parent="." unique_id=1660379966]
+[node name="结束按钮" type="Button" parent="." unique_id=359903039]
 layout_mode = 0
-offset_left = 405.0
-offset_top = 335.0
-offset_right = 586.0
-offset_bottom = 446.0
-mouse_filter = 1
-texture = ExtResource("4")
-region_rect = Rect2(56.6871, 315.802, 2302.22, 1054.07)
+offset_left = 392.00003
+offset_top = 352.0
+offset_right = 1998.0
+offset_bottom = 1440.0
+scale = Vector2(0.15000795, 0.15076746)
+theme_override_colors/font_color = Color(0.50431603, 0.82631445, 0.956536, 1)
+theme_override_colors/font_focus_color = Color(0.34901962, 0.7529412, 0.90588236, 1)
+theme_override_colors/font_pressed_color = Color(0.86767256, 0.30068865, 0.36108124, 1)
+theme_override_colors/font_hover_color = Color(0.34901962, 0.7529412, 0.90588236, 1)
+theme_override_colors/icon_pressed_color = Color(0.49094045, 0.16086146, 0.17144993, 1)
+theme_override_constants/outline_size = 28
+theme_override_fonts/font = ExtResource("2_nttbu")
+theme_override_font_sizes/font_size = 237
+text = "EXIT"
+icon = ExtResource("2_mn07o")
+flat = true
+icon_alignment = 1
 
-[connection signal="gui_input" from="开始按钮" to="." method="_on_start_gui_input"]
+[connection signal="pressed" from="开始按钮" to="." method="_on_开始按钮_pressed"]
 [connection signal="gui_input" from="设置按钮" to="." method="_on_setting_gui_input"]
-[connection signal="gui_input" from="结束按钮" to="." method="_on_end_gui_input"]
+[connection signal="pressed" from="结束按钮" to="." method="_on_结束按钮_pressed"]
